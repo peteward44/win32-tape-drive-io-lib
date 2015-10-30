@@ -1,0 +1,293 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TapeDriveIO</name>
+    </assembly>
+    <members>
+        <member name="T:TapeDriveIO.TapeDrive">
+            <summary>
+            Represents a Tape Drive
+            </summary>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.#ctor(System.Int32)">
+            <summary>
+            Constructs a tape drive with the given integer ID.
+            All tape drives under windows have an ID, starting at 0.
+            </summary>
+            <param name="tapeID">ID of tape</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.Close">
+            <summary>
+            Closes connection to the tape drive
+            </summary>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.Load">
+            <summary>
+            Loads the tape
+            </summary>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.UnLoad">
+            <summary>
+            Unloads the tape
+            </summary>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.Prepare(TapeDriveIO.TapeDrive.PrepareOption,System.Boolean)">
+            <summary>
+            Called by all functions that require PrepareTape()
+            </summary>
+            <param name="option">PrepareType option</param>
+            <param name="immediate">If true, return immediately.
+            If false, return after operation has finished</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.Format">
+            <summary>
+            Partitions the tape based on the device's default definition of partitions.
+            </summary>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.Format(System.Int32)">
+            <summary>
+            Partitions the tape into the number of partitions specified by numPartitions.
+            The size of the partitions is determined by the device's default partition size.
+            For more specific information, refer to the documentation for your tape device.
+            </summary>
+            <param name="numPartitions">Number of partitions to create</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.Format(System.Int32,System.Int32)">
+            <summary>
+            Partitions the tape into the number and size of partitions
+            specified by numPartitions and size,
+            respectively, except for the last partition.
+            The size of the last partition is the remainder of the tape.
+            </summary>
+            <param name="numPartitions">Number of partitions to create</param>
+            <param name="size">Size, in megabytes, of each partition</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.FormatHelper(TapeDriveIO.TapeDrive.FormatOption,System.UInt32,System.UInt32)">
+            <summary>
+            Used by all Format() functions to call CreateTapePartition()
+            </summary>
+            <param name="option">Win32 option to send</param>
+            <param name="count"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.LowLevelFormat">
+            <summary>
+            Performs a low-level format of the tape.
+            Currently, only the QIC117 device supports this feature.
+            </summary>
+            <param name="immediate">If true, return immediately.
+            If false, return after operation has finished</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeDrive.ResetTension">
+            <summary>
+            Adjusts the tension by moving the tape to the end of the tape and back to the beginning.
+            This option is not supported by all devices, shall just return if not supported.
+            </summary>
+            <param name="immediate">If true, return immediately.
+            If false, return after operation has finished</param>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.Handle">
+            <summary>
+            Returns raw tape handle
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.Locked">
+            <summary>
+            Locks / Unlocks the drive
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.Loaded">
+            <summary>
+            If a tape is loaded. Use the Load() and UnLoad() methods to change this.
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.MaximumBlockSize">
+            <summary>
+            Maximum block size.
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.MinimumBlockSize">
+            <summary>
+            Minimum block size.
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.DefaultBlockSize">
+            <summary>
+            Default block size.
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.MaximumSupportedPartitions">
+            <summary>
+            Maximum number of partitions supported
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.HardwareCompressionEnabled">
+            <summary>
+            Gets/Sets hardware compression
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.HardwareErrorCorrectionEnabled">
+            <summary>
+            Gets/Sets if ECC is enabled
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.DataPaddingEnabled">
+            <summary>
+            Data padding enabled
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.ReportSetMarks">
+            <summary>
+            Whether to report when a set mark is read
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeDrive.EndOfTapeWarningZoneSize">
+            <summary>
+            Number of bytes between the end of the tape and the EOT warning marker
+            </summary>
+        </member>
+        <member name="T:TapeDriveIO.TapeDriveException">
+            <summary>
+            Base exception for all tape drive errors
+            </summary>
+        </member>
+        <member name="T:TapeDriveIO.TapeDriveNotFoundException">
+            <summary>
+            Tape drive ID has not been found
+            </summary>
+        </member>
+        <member name="T:TapeDriveIO.LockFailedException">
+            <summary>
+            Lock failed on tape
+            </summary>
+        </member>
+        <member name="T:TapeDriveIO.MediaChangedException">
+            <summary>
+            If the media changes
+            </summary>
+        </member>
+        <member name="T:TapeDriveIO.NoMediaException">
+            <summary>
+            Theres no media in the tape drive
+            </summary>
+        </member>
+        <member name="T:TapeDriveIO.WriteProtectedException">
+            <summary>
+            Media is write-protected
+            </summary>
+        </member>
+        <member name="T:TapeDriveIO.TapeDriveFunctions">
+            <summary>
+            Publically holds all Win32 tape drive functions and associated structures
+            </summary>
+        </member>
+        <member name="M:TapeDriveIO.TapeDriveFunctions.GetTapeDriveParameters(TapeDriveIO.TapeDrive)">
+            <summary>
+            Gets the tape drive parameters
+            </summary>
+            <returns>Class containing drive parameters</returns>
+        </member>
+        <member name="M:TapeDriveIO.TapeDriveFunctions.GetTapeMediaParameters(TapeDriveIO.TapeDrive)">
+            <summary>
+            Gets the tape media parameters
+            </summary>
+            <returns>Class containing media parameters</returns>
+        </member>
+        <member name="T:TapeDriveIO.TapeStream">
+            <summary>
+            Tape Stream. For reading and writing to a tape
+            </summary>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.#ctor(TapeDriveIO.TapeDrive)">
+            <summary>
+            Constructs a TapeStream
+            </summary>
+            <param name="drive">TapeDrive to read/write from</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.Flush">
+            <summary>
+            Flushes buffers to the drive
+            </summary>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Reads data from the tapedrive
+            </summary>
+            <param name="buffer">byte buffer to copy into</param>
+            <param name="offset">integer offset within buffer to start copying data to</param>
+            <param name="count">number of bytes to copy</param>
+            <returns>number of bytes read</returns>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes data to the tapedrive
+            </summary>
+            <param name="buffer">byte buffer to copy from</param>
+            <param name="offset">integer offset within buffer to start copying data from</param>
+            <param name="count">number of bytes to copy</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+            Seeks to a specified position within the stream
+            </summary>
+            <param name="offset">offset from SeekOrigin to seek to</param>
+            <param name="seekTo">where seeking should begin</param>
+            <returns>new stream position</returns>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.SetLength(System.Int64)">
+            <summary>
+            Does nothing
+            </summary>
+            <param name="length"></param>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.Erase">
+            <summary>
+            Erases the tape from the current position to the end of partition.
+            </summary>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.WriteFileMark(System.UInt32)">
+            <summary>
+            Writes the specified number of filemarks to the current position
+            </summary>
+            <param name="count">Number of filemarks to write</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.WriteLongFileMark(System.UInt32)">
+            <summary>
+            Writes the specified number of long filemarks to the current position
+            </summary>
+            <param name="count">Number of long filemarks to write</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.WriteShortFileMark(System.UInt32)">
+            <summary>
+            Writes the specified number of short filemarks to the current position
+            </summary>
+            <param name="count">Number of short filemarks to write</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.WriteSetMark(System.UInt32)">
+            <summary>
+            Writes the specified number of set marks to the current position
+            </summary>
+            <param name="count">Number of set marks to write</param>
+        </member>
+        <member name="M:TapeDriveIO.TapeStream.WriteEndOfDataMark">
+            <summary>
+            Writes an end of data mark at the current position
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeStream.Position">
+            <summary>
+            Gets/Sets the position within the stream
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeStream.IsGood">
+            <summary>
+            True if the stream is ok, false if it isnt
+            </summary>
+        </member>
+        <member name="P:TapeDriveIO.TapeStream.Length">
+            <summary>
+            Length of tape drive
+            </summary>
+        </member>
+    </members>
+</doc>
